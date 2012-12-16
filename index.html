@@ -89,7 +89,7 @@
 			<div id="table_container"></div>
 		</div>
 	
-		<script id="animalTemplate" type="text/template">			
+		<script id="itemTemplate" type="text/template">			
 				<td class="id"><%= id %></td>
 				<td class="name"><%= name %></td>
 				<td class="type"><%= type %></td>
@@ -104,22 +104,22 @@
 		
 
 		
-		<script id="animalFormTemplate" type="text/template">
-			<form id="EditAnimal" class="animalForm">
+		<script id="itemFormTemplate" type="text/template">
+			<form id="EditItem" class="itemForm">
 				<fieldset class="root">
-					<p class="legend">Edit Animal Details:</p>
+					<p class="legend">Edit Item Details:</p>
 					<p class="message"></p>
 					<fieldset class="child fst">
-						<span id="anim_id" class="label">Animal Id: </span>
+						<span id="anim_id" class="label">Item Id: </span>
 							<br />
 							<span><%= id %></span>
 							<input type="hidden" name="id" id="anim_id" value="<%= id %>"/>
 						<br />
-						<label class="label" for="anim_name">Animal Name: </label>
+						<label class="label" for="anim_name">Item Name: </label>
 							<br />
 							<input type="text" name="name" value="<%= name %>" id="anim_name"/>
 						<br />
-						<label class="label" for="anim_type">Animal Type: </label>
+						<label class="label" for="anim_type">Item Type: </label>
 							<br />
 							<select name="type" value="<%= type %>" id="anim_type">
 								<option value="cow" selected="selected">Cow</option>
@@ -128,20 +128,20 @@
 								<option value="heifer">Heifer</option>
 							</select>
 						<br />
-						<label class="label" for="anim_weight">Animal Purchase Weight: </label>
+						<label class="label" for="anim_weight">Item Purchase Weight: </label>
 							<br />
 							<input type="text" name="weight" value="<%= weight %>" id="anim_weight"/>
 						<br />
-						<label class="label" for="anim_made">Animal Birth Date: </label>
+						<label class="label" for="anim_made">Item Birth Date: </label>
 							<br />
 							<input type="text" name="made" value="<%= made %>" id="anim_made"/>
 					</fieldset>
 					<fieldset class="child sec">
-						<label class="label" for="anim_item_class">Animal item_class: </label>
+						<label class="label" for="anim_item_class">Item item_class: </label>
 							<br />
 							<input type="text" name="item_class" value="<%= item_class %>" id="anim_item_class"/>
 						<br />
-						<label class="label" for="anim_price">Animal Purchase Price: </label>
+						<label class="label" for="anim_price">Item Purchase Price: </label>
 							<br />
 							<input type="text" name="price" value="<%= price %>" id="anim_price"/>				
 					</fieldset>
@@ -157,22 +157,22 @@
 			</form>		
 		</script>
 		
-		<script id="animalFormNewTemplate" type="text/template">
-			<form id="NewAnimal" class="animalForm">
+		<script id="itemFormNewTemplate" type="text/template">
+			<form id="NewItem" class="itemForm">
 				<fieldset class="root">
-					<p class="legend">Enter New Animal Details:</p>
+					<p class="legend">Enter New Item Details:</p>
 					<p class="message"></p>
 					
 					<fieldset class="child fst">
-						<label class="label" for="anim_id">Animal Id: </label>
+						<label class="label" for="anim_id">Item Id: </label>
 							<br />
 							<input type="text" name="id" id="anim_id"/>
 						<br />
-						<label class="label" for="anim_name">Animal Name: </label>
+						<label class="label" for="anim_name">Item Name: </label>
 							<br />
 							<input type="text" name="name" id="anim_name"/>
 						<br />
-						<label class="label" for="anim_type">Animal Type: </label>
+						<label class="label" for="anim_type">Item Type: </label>
 							<br />
 							<select name="type" id="anim_type">
 								<option></option>
@@ -182,21 +182,21 @@
 								<option value="heifer">Heifer</option>
 							</select>
 						<br />
-						<label class="label" for="anim_weight">Animal Purchase Weight: </label>
+						<label class="label" for="anim_weight">Item Purchase Weight: </label>
 							<br />
 							<input type="text" name="weight" id="anim_weight"/>
 						<br />
-						<label class="label" for="anim_made">Animal Birth Date: </label>
+						<label class="label" for="anim_made">Item Birth Date: </label>
 							<br />
 							<input type="text" name="made" id="anim_made"/>
 						<br />		
 					</fieldset>
 					<fieldset class="child sec">
-						<label class="label" for="anim_item_class">Animal item_class: </label>
+						<label class="label" for="anim_item_class">Item item_class: </label>
 							<br />
 							<input type="text" name="item_class"" id="anim_item_class"/>
 						<br />
-						<label class="label" for="anim_price">Animal Purchase Price: </label>
+						<label class="label" for="anim_price">Item Purchase Price: </label>
 							<br />
 							<input type="text" name="price" id="anim_price"/>
 		
@@ -211,7 +211,7 @@
 				</fieldset>
 			</form>		
 		</script>
-		<script id="animalsTemplate" type="text/template">			
+		<script id="itemsTemplate" type="text/template">			
 			<table class="main">
 				<tr>
 					<th class="id sorting"><p><span class="prop">id</span><span class="arrow"></span></p></th>
