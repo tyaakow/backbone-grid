@@ -6,7 +6,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<meta name="description" content="">
 		<meta name="author" content="">
-		<link href="css/fonts.css" rel="stylesheet">
+		<link href="css/icons.css" rel="stylesheet">
 		<link href="css/style.css" rel="stylesheet">
 		<style>
 			body {background:#ddd; font-family: arial, sans-serif; padding-top:48px;}
@@ -38,7 +38,9 @@
 			table.main th, table.main td.id, table.main tr.form td.id {text-align:center;}
 			table.main td.id, table.main th.id, table.main tr.form td.id {padding:4px;}
 			table.main td.button {cursor:pointer; padding:0px 2px;}
-			img.butn {cursor:pointer;}
+			table.main td.button span {font-size:0.86em;}
+			table.main td.button span:hover {color:#c60;}
+			
 			table.main tr.form td input {font-size:86%;}
 			
 			table.main th.sorting {cursor: pointer;}
@@ -97,9 +99,9 @@
 				<td class="item_class"><%= item_class %></td>
 				<td class="price"><%= price %></td>
 				<td class="weight"><%= weight %></td>
-				<td class="button"><img class="butn view" title="view" src="img/view.png" /></td>
-				<td class="button"><img class="butn edit" title="edit" src="img/update.png" /></td>
-				<td class="button"><img class="butn delete" title="delete" src="img/delete.png" /></td>
+				<td class="button"><span class="icon-search-2" aria-hidden="true"></span></td>
+				<td class="button edit"><span class="icon-pencil" aria-hidden="true"></span></td>
+				<td class="button delete"><span class="icon-remove" aria-hidden="true"></span></td>
 		</script>
 		
 

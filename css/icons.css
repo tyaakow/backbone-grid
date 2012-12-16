@@ -1,0 +1,180 @@
+@font-face {
+	font-family: 'icomoon';
+	src:url('../icons/fonts/icomoon.eot');
+	src:url('../icons/fonts/icomoon.eot?#iefix') format('embedded-opentype'),
+		url('../icons/fonts/icomoon.svg#icomoon') format('svg'),
+		url('../icons/fonts/icomoon.woff') format('woff'),
+		url('../icons/fonts/icomoon.ttf') format('truetype');
+	font-weight: normal;
+	font-style: normal;
+}
+
+/* Use the following CSS code if you want to use data attributes for inserting your icons */
+[data-icon]:before {
+	font-family: 'icomoon';
+	content: attr(data-icon);
+	speak: none;
+	font-weight: normal;
+	line-height: 1;
+	-webkit-font-smoothing: antialiased;
+}
+
+/* Use the following CSS code if you want to have a class per icon */
+[class^="icon-"]:before, [class*=" icon-"]:before {
+	font-family: 'icomoon';
+	font-style: normal;
+	speak: none;
+	font-weight: normal;
+	line-height: 1;
+	-webkit-font-smoothing: antialiased;
+}
+.icon-home:before {
+	content: "\61";
+}
+.icon-newspaper:before {
+	content: "\62";
+}
+.icon-pencil:before {
+	content: "\e002";
+}
+.icon-camera:before {
+	content: "\e003";
+}
+.icon-play:before {
+	content: "\e004";
+}
+.icon-file:before {
+	content: "\e005";
+}
+.icon-cabinet:before {
+	content: "\e006";
+}
+.icon-support:before {
+	content: "\e007";
+}
+.icon-user:before {
+	content: "\e008";
+}
+.icon-search:before {
+	content: "\e009";
+}
+.icon-key:before {
+	content: "\e00a";
+}
+.icon-locked:before {
+	content: "\e00b";
+}
+.icon-unlocked:before {
+	content: "\e00c";
+}
+.icon-wrench:before {
+	content: "\e00d";
+}
+.icon-pie:before {
+	content: "\e00e";
+}
+.icon-stats-up:before {
+	content: "\e00f";
+}
+.icon-remove:before {
+	content: "\63";
+}
+.icon-cancel:before {
+	content: "\e011";
+}
+.icon-checkmark:before {
+	content: "\e012";
+}
+.icon-cancel-2:before {
+	content: "\e013";
+}
+.icon-enter:before {
+	content: "\e014";
+}
+.icon-exit:before {
+	content: "\e015";
+}
+.icon-minus:before {
+	content: "\e016";
+}
+.icon-plus:before {
+	content: "\e017";
+}
+.icon-thumbs-up:before {
+	content: "\e018";
+}
+.icon-thumbs-down:before {
+	content: "\e019";
+}
+.icon-download:before {
+	content: "\e01a";
+}
+.icon-upload:before {
+	content: "\e01b";
+}
+.icon-link:before {
+	content: "\e01c";
+}
+.icon-link-2:before {
+	content: "\e01d";
+}
+.icon-menu:before {
+	content: "\e01e";
+}
+.icon-twitter:before {
+	content: "\e01f";
+}
+.icon-facebook:before {
+	content: "\e020";
+}
+.icon-google-plus:before {
+	content: "\e021";
+}
+.icon-code:before {
+	content: "\e022";
+}
+.icon-embed:before {
+	content: "\e023";
+}
+.icon-github:before {
+	content: "\e024";
+}
+.icon-skype:before {
+	content: "\e025";
+}
+.icon-cloud:before {
+	content: "\e026";
+}
+.icon-search-2:before {
+	content: "\e027";
+}
+.icon-house:before {
+	content: "\e028";
+}
+.icon-next:before {
+	content: "\10d";
+}
+.icon-first:before {
+	content: "\107";
+}
+.icon-last:before {
+	content: "\17e";
+}
+.icon-previous:before {
+	content: "\111";
+}
+.icon-linkedin:before {
+	content: "\e02d";
+}
+.icon-plus-2:before {
+	content: "\e02e";
+}
+.icon-close:before {
+	content: "\e02f";
+}
+.icon-location:before {
+	content: "\e030";
+}
+.icon-mobile:before {
+	content: "\e031";
+}
