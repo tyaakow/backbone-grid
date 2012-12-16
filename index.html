@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<title>item_classeron datagrid</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta name="description" content="">
+		<meta name="author" content="">
+		<link href="css/fonts.css" rel="stylesheet">
+		<link href="css/style.css" rel="stylesheet">
+		<style>
+			body {background:#ddd; font-family: arial, sans-serif; padding-top:48px;}
+			th, th p{font-weight:bold; font-size:90%;}
+			
+			.hideOverflow { overflow:hidden;}
+			
+			#main_container { margin:18px auto; padding:40px; max-width:560px;  background:#f8f8f8;
+				-webkit-box-shadow:  0 0 80px 0 rgba(0,0,0,.4);
+				-moz-box-shadow:  0 0 80px 0 rgba(0,0,0,.4);
+				box-shadow:  0 0 80px 0 rgba(0,0,0,.4);
+				border-radius:28px;
+				}
+				
+
+				
+			#table_container {margin:12px auto; padding:0px;}
+			
+		
+			
+			}
+			
+			table.main {display:none; width:100%; margin:0px auto; padding:0px; max-width:750px; min-width:500px;}
+			table.main tr td, table.main th {border: 1px solid #f4f4f4; border-collapse: collapse; padding: 8px 10px;}
+			table.sub, table.sub tr, table.main table td {border: 0px; border-collapse: collapse; padding: 4px 6px;}
+			table.main tr.form td {padding:2px;}
+			table.main tr.form td input {padding:6px; width:90%; max-width:80px; background:$aaa; border:none;}
+			table.main td, table.main td input {font-size:92%; color:#555;}
+			table.main th, table.main td.id, table.main tr.form td.id {text-align:center;}
+			table.main td.id, table.main th.id, table.main tr.form td.id {padding:4px;}
+			table.main td.button {cursor:pointer; padding:0px 2px;}
+			img.butn {cursor:pointer;}
+			table.main tr.form td input {font-size:86%;}
+			
+			table.main th.sorting {cursor: pointer;}
+			
+			#overlay {width:100%; min-height: 1800px; background:url(img/overlaybg.png); position:absolute; top:0px; z-index:9999999999999999999; overflow:hidden;}
+			#overlay form {width:592px; position:fixed; top: 150px; left:50%; margin-left:-300px; color: #fff; font-weight:bold;}
+			#overlay form fieldset.root {padding: 62px 22px 22px 22px; background:url(img/overlayfs.png); 
+				-moz-border-radius: 8px;
+				border-radius: 8px; position:relative;				
+				-webkit-box-shadow:  0 0 60px 0 rgba(0,0,0,.4);
+				-moz-box-shadow:  0 0 60px 0 rgba(0,0,0,.4);
+				box-shadow:  0 0 60px 0 rgba(0,0,0,.4);
+			}
+			#overlay form fieldset.root .legend {font-size:116%; color:#ee3322; position:absolute; top:12px; left:22px;}
+			#overlay form fieldset fieldset label {float:left;}
+			#overlay form fieldset .legend, #overlay form fieldset span, #overlay form fieldset label {font-weight:bold;}
+			#overlay form fieldset fieldset.child.fst {float:left;}
+			#overlay form fieldset fieldset.child.sec {float:right;}
+			#overlay form fieldset fieldset input {float:right; margin-bottom:8px;}
+			#overlay form fieldset .control {position:absolute; bottom:12px; right:12px;}
+			#overlay form fieldset .control_close {position:absolute; top:12px; right:12px;}
+			
+			div.pager {margin:auto; text-align:center; position:relative;}
+			.pager span.current {color:#ee3322;}
+			.pager span {cursor:pointer; font-size:100%; margin:0px 4px; font-weight:bold;}
+			.pager span.pager_first, .pager span.pager_prev {float: left; margin-left: 8px;}
+			.pager span.pager_last, .pager span.pager_next {float:right; margin-right:8px;}
+			.pager span.nums {margin:auto;}
+			th p span.arrow {width:16px; height:16px; display:block; float:right; }
+			th p.asc span.arrow {background: url(img/one_light.png) no-repeat -230px 0px; }
+			#sortby p.asc span.arrow {background: url(img/one_red.png) no-repeat -230px 0px;}
+			#sortby p.desc span.arrow {background: url(img/one_red.png) no-repeat -2px 0px;}
+			#sortby span.prop { color:#ee3322;}
+			th p {height:16px; padding:0px;}
+			th span {display:block; float:left; padding:0px;}
+			th p span.arrow {margin: 2px 0px 0px 2px;}
+			
+			h2.legend {font-size:1.4em; color:#777; font-weight:bold; margin-bottom:0px; }
+			p.legend {font-size:1em; color:#777; font-weight:bold; margin-bottom:8px; }
+
+			
+			
+		</style>	
+	</head>
+	<body>
+		
+		<div id="main_container">
+			<div id="table_container"></div>
+		</div>
+	
+		<script id="animalTemplate" type="text/template">			
+				<td class="id"><%= id %></td>
+				<td class="name"><%= name %></td>
+				<td class="type"><%= type %></td>
+				<td class="made"><%= made %></td>
+				<td class="item_class"><%= item_class %></td>
+				<td class="price"><%= price %></td>
+				<td class="weight"><%= weight %></td>
+				<td class="button"><img class="butn view" title="view" src="img/view.png" /></td>
+				<td class="button"><img class="butn edit" title="edit" src="img/update.png" /></td>
+				<td class="button"><img class="butn delete" title="delete" src="img/delete.png" /></td>
+		</script>
+		
+
+		
+		<script id="animalFormTemplate" type="text/template">
+			<form id="EditAnimal" class="animalForm">
+				<fieldset class="root">
+					<p class="legend">Edit Animal Details:</p>
+					<p class="message"></p>
+					<fieldset class="child fst">
+						<span id="anim_id" class="label">Animal Id: </span>
+							<br />
+							<span><%= id %></span>
+							<input type="hidden" name="id" id="anim_id" value="<%= id %>"/>
+						<br />
+						<label class="label" for="anim_name">Animal Name: </label>
+							<br />
+							<input type="text" name="name" value="<%= name %>" id="anim_name"/>
+						<br />
+						<label class="label" for="anim_type">Animal Type: </label>
+							<br />
+							<select name="type" value="<%= type %>" id="anim_type">
+								<option value="cow" selected="selected">Cow</option>
+								<option value="bull">Bull</option>
+								<option value="calf">Calf</option>
+								<option value="heifer">Heifer</option>
+							</select>
+						<br />
+						<label class="label" for="anim_weight">Animal Purchase Weight: </label>
+							<br />
+							<input type="text" name="weight" value="<%= weight %>" id="anim_weight"/>
+						<br />
+						<label class="label" for="anim_made">Animal Birth Date: </label>
+							<br />
+							<input type="text" name="made" value="<%= made %>" id="anim_made"/>
+					</fieldset>
+					<fieldset class="child sec">
+						<label class="label" for="anim_item_class">Animal item_class: </label>
+							<br />
+							<input type="text" name="item_class" value="<%= item_class %>" id="anim_item_class"/>
+						<br />
+						<label class="label" for="anim_price">Animal Purchase Price: </label>
+							<br />
+							<input type="text" name="price" value="<%= price %>" id="anim_price"/>				
+					</fieldset>
+					<br />
+					<div class="control_close">
+						<img class="butn close" title="close" src="img/close_big.png" />
+					</div>
+					<div class="control">
+						<img class="butn save" title="save" src="img/save_big.png" />
+						<img class="butn delete" title="delete" src="img/delete_big.png" />
+					</div>
+				</fieldset>
+			</form>		
+		</script>
+		
+		<script id="animalFormNewTemplate" type="text/template">
+			<form id="NewAnimal" class="animalForm">
+				<fieldset class="root">
+					<p class="legend">Enter New Animal Details:</p>
+					<p class="message"></p>
+					
+					<fieldset class="child fst">
+						<label class="label" for="anim_id">Animal Id: </label>
+							<br />
+							<input type="text" name="id" id="anim_id"/>
+						<br />
+						<label class="label" for="anim_name">Animal Name: </label>
+							<br />
+							<input type="text" name="name" id="anim_name"/>
+						<br />
+						<label class="label" for="anim_type">Animal Type: </label>
+							<br />
+							<select name="type" id="anim_type">
+								<option></option>
+								<option value="cow">Cow</option>
+								<option value="bull">Bull</option>
+								<option value="calf">Calf</option>
+								<option value="heifer">Heifer</option>
+							</select>
+						<br />
+						<label class="label" for="anim_weight">Animal Purchase Weight: </label>
+							<br />
+							<input type="text" name="weight" id="anim_weight"/>
+						<br />
+						<label class="label" for="anim_made">Animal Birth Date: </label>
+							<br />
+							<input type="text" name="made" id="anim_made"/>
+						<br />		
+					</fieldset>
+					<fieldset class="child sec">
+						<label class="label" for="anim_item_class">Animal item_class: </label>
+							<br />
+							<input type="text" name="item_class"" id="anim_item_class"/>
+						<br />
+						<label class="label" for="anim_price">Animal Purchase Price: </label>
+							<br />
+							<input type="text" name="price" id="anim_price"/>
+		
+					</fieldset>
+					<br />
+					<div class="control_close">
+						<img class="butn close" title="close" src="img/close_big.png" />
+					</div>
+					<div class="control">
+						<img class="butn save" title="save" src="img/save_big.png" />
+					</div>
+				</fieldset>
+			</form>		
+		</script>
+		<script id="animalsTemplate" type="text/template">			
+			<table class="main">
+				<tr>
+					<th class="id sorting"><p><span class="prop">id</span><span class="arrow"></span></p></th>
+					<th class="name sorting"><p><span class="prop">name</span><span class="arrow"></span></p></th>
+					<th class="type sorting"><p><span class="prop">type</span><span class="arrow"></span></p></th>
+					<th class="made"><p><span class="prop">made</span></p></th>
+					<th class="item_class"><p><span class="prop">item_class</span></p></th>
+					<th class="price sorting"><p><span class="prop">price</span><span class="arrow"></span></p></th>
+					<th class="weight sorting"><p><span class="prop">weight</span><span class="arrow"></span></p></th>
+					<th colspan="3"><p><img class="butn create" title="view" src="img/create_big.png" /></p></th>
+				</tr>
+			</table> 		
+		</script>
+		
+		<script id="pagerTemplate" type="text/template">
+			<tr class="pager"><td colspan="13">
+				<div class="pager">
+					<%= prev %>
+					<%= nums %>
+					<%= next %>			
+				</div>			
+			</td></tr>
+		</script>
+		
+	
+		
+		<script src="js/jquery.js"></script>
+		<script src="js/underscore.min.js"></script>
+		<script src="js/backbone.js"></script>
+		<script src="js/app.js"></script>
+	</body>
+
+</html>
+    
+   
