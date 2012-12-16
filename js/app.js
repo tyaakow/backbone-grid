@@ -12,18 +12,18 @@
 	}
 
     
-    //define Item model
-    var Item = Backbone.Model.extend(
+    //define animal model
+    var Animal = Backbone.Model.extend(
     {
-		validate: function(Item) {
+		validate: function(animal) {
 			params = ["id", "name", "made", "price", "weight","type"];
 			for (x = 0; x < 8; x++)
-			{eval(params[x] + " = Item." + params[x]) }
+			{eval(params[x] + " = animal." + params[x]) }
 			directory != undefined ? ids = directory.collection.pluck("id") : ids = [];
 			
 			// ID validation
 			if (id == ""){return "ID is required"}
-			else if ($.isNumeric(id) && $("form.ItemForm").attr("id") !== "EditItem") {
+			else if ($.isNumeric(id) && $("form.animalForm").attr("id") !== "EditAnimal") {
 				if (((String(id).indexOf(".") != -1) || (String(id).indexOf("-") != -1))
 				|| (ids.indexOf(id) != -1))				
 				{return "ID: Please, enter a whole, positive, unique number";}
@@ -54,10 +54,10 @@
 			
 			// adding a leading zero to days / months, stripping a trailing dot
 			if (made.split(".")[0].length < 2) 
-			{Item.made = "0" + made.split(".")[0] + "." + made.split(".")[1] + "." + made.split(".")[2]} 
+			{animal.made = "0" + made.split(".")[0] + "." + made.split(".")[1] + "." + made.split(".")[2]} 
 			if (made.split(".")[1].length < 2) 
-			{Item.made = made.split(".")[0] + "." + "0" + made.split(".")[1] + "." + made.split(".")[2]}
-			if(/\.$/.test(made)){Item.made = made.replace(/\.$/, "");}
+			{animal.made = made.split(".")[0] + "." + "0" + made.split(".")[1] + "." + made.split(".")[2]}
+			if(/\.$/.test(made)){animal.made = made.replace(/\.$/, "");}
 
 			
 			// Price validation
@@ -88,12 +88,12 @@
 			return b_day + "." + b_month + "." + date.getFullYear();				
 		}
 	});
-////////////////////// done Item model
+////////////////////// done Animal model
 
 
-    //define Items collection (super-model, contains all the Items)
+    //define animals collection (super-model, contains all the animals)
     var Collection = Backbone.Collection.extend({
-        model: Item,
+        model: Animal,
         pageSize: Settings.page.length,
         rlength: 4, // radial length of pagination menu (max number of page links on each side of current page)
         pagerLength: function(){ // complete number of pages
@@ -103,13 +103,13 @@
 
 		paginate: function(){
 			var that = this;	
-			return this.groupBy(function(Item){
+			return this.groupBy(function(animal){
 				/* 
 				 * formula for getting page number of an item from index number of item 
 				 * in collection and wanted page size (number of items per page)
 				 * needed numbers must be offset by 1
 				 */		
-				return Math.ceil((1 + that.indexOf(Item) + that.pageSize) / that.pageSize) - 1;	
+				return Math.ceil((1 + that.indexOf(animal) + that.pageSize) / that.pageSize) - 1;	
 			});
 		},
 		
@@ -119,73 +119,74 @@
 	
 	{		
 		//demo data - Static method   
-	    multiplyItems: function(){
+	    multiplyAnimals: function(){
 			var x = Settings.items;
 			var result = [];
-			var types = ["type1", "supertype", "extratype", "type_y"];
-			var names = ["Model_1", "Model_S_2","Model_3", "Model_3_4_R", "ModelXL"];
+			var types = ["cow", "bull", "calf", "heifer"];
+			var partners = Settings.partners;
+			var names = ["Milojka", "Berta", "Lokko", "Kokolo", "Bajka", "Gonzo", "Bikonja"];
 			for (i = 0; i<x; i++){
-				Item = {id : String(i)};
-					Item.name = names[Math.floor(Math.random()*7)];
-					Item.type = types[Math.floor(Math.random()*4)];
-					Item_made = new Date(parseInt(Math.random() * 18000000000) + 1130000000000);
-					// uses Item static method 
-					Item.made = Item.made(Item_made);
-					Item.mother = names[Math.floor(Math.random()*7)] + "_" + Math.floor(Math.random()*4);
-					Item.price = parseInt(Math.random() * 1200) + 400 + ".00"
-					Item.weight = parseInt(Math.random() * 1000) + 200 + ".00";
-					Item.item_class = "It_Class" + Math.floor(Math.random()*20);			
-				result.push(Item);
+				animal = {id : String(i)};
+					animal.name = names[Math.floor(Math.random()*7)];
+					animal.type = types[Math.floor(Math.random()*4)];
+					animal_made = new Date(parseInt(Math.random() * 18000000000) + 1130000000000);
+					// uses Animal static method 
+					animal.made = Animal.made(animal_made);
+					animal.mother = names[Math.floor(Math.random()*7)] + "_" + Math.floor(Math.random()*4);
+					animal.price = parseInt(Math.random() * 1200) + 400 + ".00"
+					animal.weight = parseInt(Math.random() * 1000) + 200 + ".00";
+					animal.item_class = "It_Class" + Math.floor(Math.random()*20);			
+				result.push(animal);
 			}
 			return result;
 		}, 
 		
 		comparators: {
-				id: function(Item) {
-				  return Number(Item.get("id"));
+				id: function(animal) {
+				  return Number(animal.get("id"));
 				},
 				
-				d_id: function(Item) {
-				  return -Number(Item.get("id")); // descending
+				d_id: function(animal) {
+				  return -Number(animal.get("id")); // descending
 				},
 				
-				name: function(Item) {
-				  return Item.get("name");
+				name: function(animal) {
+				  return animal.get("name");
 				},
 				
-				d_name: function(Item) {
-				  return String.fromCharCode.apply(String, _.map(Item.get("name").split(""), function (c) {
+				d_name: function(animal) {
+				  return String.fromCharCode.apply(String, _.map(animal.get("name").split(""), function (c) {
 						return 0xffff - c.charCodeAt();
 				        })
 				  );
 				},
 
 				
-				type: function(Item) {
-				  return Item.get("type");
+				type: function(animal) {
+				  return animal.get("type");
 				},
 				
-				d_type: function(Item) {
-				  return String.fromCharCode.apply(String, _.map(Item.get("type").split(""), function (c) {
+				d_type: function(animal) {
+				  return String.fromCharCode.apply(String, _.map(animal.get("type").split(""), function (c) {
 						return 0xffff - c.charCodeAt();
 				        })
 				  );
 				},
 				
-				price: function(Item) {
-				  return Number(Item.get("price"));
+				price: function(animal) {
+				  return Number(animal.get("price"));
 				},
 				
-				d_price: function(Item) {
-				  return -Item.get("price");
+				d_price: function(animal) {
+				  return -animal.get("price");
 				},
 				
-				weight: function(Item) {
-				  return Number(Item.get("weight"));
+				weight: function(animal) {
+				  return Number(animal.get("weight"));
 				},
 				
-				d_weight: function(Item) {
-				  return -Item.get("weight");
+				d_weight: function(animal) {
+				  return -animal.get("weight");
 				}
 
 		}
@@ -204,11 +205,11 @@
      */
       
     var FormView = Backbone.View.extend({
-		template: $("#ItemFormTemplate").html(),
-		templateNew: $("#ItemFormNewTemplate").html(),
+		template: $("#animalFormTemplate").html(),
+		templateNew: $("#animalFormNewTemplate").html(),
         tagName: "div",
         id: "overlay",
-        className: "Item_form_cont",
+        className: "animal_form_cont",
         
         render: function() {
             var template = _.template(this.templateNew);
@@ -225,9 +226,9 @@
         renderExisting: function() {
             var template = _.template(this.template);
             var el = $(this.el);
-            var Item = this.model.toJSON();
+            var animal = this.model.toJSON();
             $('body').prepend(el).addClass("hideOverflow");
-            $("#overlay").hide().html(template(Item)).fadeIn(400);
+            $("#overlay").hide().html(template(animal)).fadeIn(400);
             
             
 			$("img.close", "#overlay").bind("click", function(){ 
@@ -258,19 +259,19 @@
 		},
 		
 		events: {
-			"click #NewItem img.save": "SaveNew",
-			"click #EditItem img.save": "SaveExisting",
-			"click #EditItem img.delete": "DeleteExisting",
+			"click #NewAnimal img.save": "SaveNew",
+			"click #EditAnimal img.save": "SaveExisting",
+			"click #EditAnimal img.delete": "DeleteExisting",
 			"click img.close": "QuitNew",
 		},		
 		
 		SaveNew: function(){
 			var that = this;
-			var form = $("#NewItem");
-			var Item = new Item();
-			if (Item.set(that.formToJson(form)))
+			var form = $("#NewAnimal");
+			var animal = new Animal();
+			if (animal.set(that.formToJson(form)))
 			{						
-				directory.collection.add(Item);
+				directory.collection.add(animal);
 				sort_parameter = directory.sort_parameter;
 				page = directory.page;
 				directory.collection.sort();
@@ -284,7 +285,7 @@
 		
 		SaveExisting: function(){
 			var that = this;
-			var form = $("#EditItem");
+			var form = $("#EditAnimal");
 			this.model.set(that.formToJson(form));
 			var sort_parameter = directory.sort_parameter;
 			var page = directory.page;
@@ -296,7 +297,7 @@
 		
 		DeleteExisting: function(){
 			var that = this;
-			if (confirm("Delete this Item?")){
+			if (confirm("Delete this animal?")){
 				this.model.collection.remove(this.model);
 				this.remove();
 				var sort_parameter = directory.sort_parameter;
@@ -317,16 +318,16 @@
 	
    
 /*
- * Individual Item view for every Item in a table, with registered events & its own model
+ * Individual animal view for every animal in a table, with registered events & its own model
  * 
  */  
     
     
-    var ItemView = Backbone.View.extend({
+    var AnimalView = Backbone.View.extend({
         tagName: "tr",
-        className: "Item_view",
-        template: $("#ItemTemplate").html(),
-        formTemplate: $("#ItemFormTemplate").html(),
+        className: "animal_view",
+        template: $("#animalTemplate").html(),
+        formTemplate: $("#animalFormTemplate").html(),
         
         
         render: function () {
@@ -336,27 +337,27 @@
         },
         
         events: {
-		  "click .edit": "renderEditItem",
-		  "click .delete": "deleteItem",
+		  "click .edit": "renderEditAnimal",
+		  "click .delete": "deleteAnimal",
 		},
 
 		/*
-		 * renders other, FormView, for clicked Item edit button, 
+		 * renders other, FormView, for clicked animal edit button, 
 		 * called from click event of this, pageView
 		 */
-        renderEditItem: function (e) {
-            var editItemView = new FormView({
+        renderEditAnimal: function (e) {
+            var editAnimalView = new FormView({
                 model: this.model
             });
-            editItemView.renderExisting();
+            editAnimalView.renderExisting();
         },
 
 		/*
-		 * delete Item, model + view.
+		 * delete animal, model + view.
 		 * 
 		 */
-        deleteItem: function (e) {
-            if (confirm("Delete this Item?")){
+        deleteAnimal: function (e) {
+            if (confirm("Delete this animal?")){
 				var model = this.model;
 				model.collection.remove(model);
 				this.remove();	
@@ -380,7 +381,7 @@
      */
     var pageView = Backbone.View.extend({
         el: $("#table_container"),
-        template: $("#ItemsTemplate").html(),
+        template: $("#animalsTemplate").html(),
         pagerTemplate: $("#pagerTemplate").html(),
 
 
@@ -390,7 +391,7 @@
 			this.page = page;
 
 			if (new_initialize == true){
-				this.collection = new Collection(Collection.multiplyItems());
+				this.collection = new Collection(Collection.multiplyAnimals());
 			}
 
             this.collection.comparator = Collection.comparators[sort_parameter];
@@ -416,18 +417,18 @@
 		 
 		paginate: function(){			
             var that = this;
-			return that.collection.groupBy(function(Item){
+			return that.collection.groupBy(function(animal){
 				/* 
 				 * formula for getting page number of an item from index number of item 
 				 * in collection and wanted page size (number of items per page)
 				 * needed numbers must be offset by 1
 				 */		
-				return Math.ceil((1 + that.collection.indexOf(Item) + that.collection.pageSize) / that.collection.pageSize) - 1;	
+				return Math.ceil((1 + that.collection.indexOf(animal) + that.collection.pageSize) / that.collection.pageSize) - 1;	
 			});
 		},  
 			    
 		/*
-		 * main renderer of a single page, calls sub renderers, renderItem and renderPager
+		 * main renderer of a single page, calls sub renderers, renderAnimal and renderPager
 		 * *sort_parameter = id, name, type, weight, price
 		 */
 		 
@@ -437,7 +438,7 @@
 			var tmpl = _.template(this.template);
             this.$el.html(tmpl());
             _.each(this.collection.paginate()[current_page], function(v, k){			
-					an_view = that.renderItem(v);				
+					an_view = that.renderAnimal(v);				
 					$("table.main", this.el).append(an_view.el);				
 			}); 
 			var pager = that.renderPager(current_page);
@@ -463,15 +464,15 @@
         },
 
 		/*
-		 * renders other, ItemView, for every Item, 
+		 * renders other, AnimalView, for every animal, 
 		 * called from render method of this, pageView
 		 */
-        renderItem: function (item) {
-            var ItemView = new ItemView({
+        renderAnimal: function (item) {
+            var animalView = new AnimalView({
                 model: item,
                 id: "an_" + item.id,
             });
-            return ItemView.render();
+            return animalView.render();
         },
         
 
@@ -581,7 +582,7 @@
 		"click .pager_prev": "prevclick",
 		"click .pager_next": "nextclick",
 		 
-		"click img.create": "NewItem", 
+		"click img.create": "NewAnimal", 
 		
 		"click table.main th.sorting": "sort",
 		
@@ -616,13 +617,13 @@
 		
 
 		/*
-		 * renders other, FormView, for clicked Item edit button, 
+		 * renders other, FormView, for clicked animal edit button, 
 		 * called from click event of this, pageView
 		 */
-        NewItem: function (e) {
-            var editItemView = new FormView({
+        NewAnimal: function (e) {
+            var editAnimalView = new FormView({
             });
-            editItemView.render();
+            editAnimalView.render();
         }, 
         
 		/*
